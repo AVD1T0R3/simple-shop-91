@@ -65,6 +65,8 @@ export default {
         },
         mtn: "hsl(var(--mtn-yellow))",
         airtel: "hsl(var(--airtel-red))",
+        navy: "hsl(var(--navy))",
+        gold: "hsl(var(--gold))",
         success: {
           DEFAULT: "hsl(var(--success))",
           foreground: "hsl(var(--success-foreground))",
