@@ -3,9 +3,13 @@ import { Plus, X, ImageIcon } from 'lucide-react';
 import { useStoreContext } from '@/context/StoreContext';
 import { toast } from 'sonner';
 
+interface AddProductFormProps {
+  showByDefault?: boolean;
+}
+
 // Admin form to add new products
-export function AddProductForm() {
-  const [isOpen, setIsOpen] = useState(false);
+export function AddProductForm({ showByDefault = false }: AddProductFormProps) {
+  const [isOpen, setIsOpen] = useState(showByDefault);
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');

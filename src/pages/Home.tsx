@@ -3,50 +3,17 @@ import { ArrowRight, ShoppingBag, Truck, Shield, Smartphone } from 'lucide-react
 import { Layout } from '@/components/layout/Layout';
 import { ProductGrid } from '@/components/products/ProductGrid';
 import { useStoreContext } from '@/context/StoreContext';
+import { HeroCarousel } from '@/components/home/HeroCarousel';
 
-// Home page with hero section and featured products
+// Home page with hero carousel and featured products
 export default function Home() {
   const { products } = useStoreContext();
   const featuredProducts = products.slice(0, 3);
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary/10 via-background to-accent/10 py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center animate-slide-up">
-            <span className="inline-block bg-primary/10 text-primary text-sm font-semibold px-4 py-2 rounded-full mb-6">
-              🛒 Welcome to ShopEasy
-            </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground mb-6 leading-tight">
-              Shop Quality Products with{' '}
-              <span className="text-primary">Mobile Money</span>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Discover amazing products and pay conveniently with MTN Mobile Money or Airtel Money. Fast, secure, and reliable.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/products"
-                className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg hover:shadow-glow"
-              >
-                Browse Products
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-              <Link
-                to="/contact"
-                className="inline-flex items-center justify-center gap-2 bg-secondary text-secondary-foreground px-8 py-4 rounded-lg font-semibold text-lg hover:bg-muted transition-colors"
-              >
-                Contact Us
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Decorative Elements */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-primary/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-10 w-32 h-32 bg-accent/20 rounded-full blur-3xl" />
-      </section>
+      {/* Hero Carousel */}
+      <HeroCarousel />
 
       {/* Features Section */}
       <section className="py-16 bg-card">
