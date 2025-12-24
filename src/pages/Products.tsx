@@ -1,9 +1,8 @@
 import { Layout } from '@/components/layout/Layout';
 import { ProductGrid } from '@/components/products/ProductGrid';
-import { AddProductForm } from '@/components/products/AddProductForm';
 import { useStoreContext } from '@/context/StoreContext';
 
-// Products page with catalog and admin form
+// Products page with catalog
 export default function Products() {
   const { products } = useStoreContext();
 
@@ -19,9 +18,6 @@ export default function Products() {
             Discover our collection of quality products
           </p>
         </div>
-
-        {/* Admin Add Product Form */}
-        <AddProductForm />
 
         {/* Product Grid */}
         <ProductGrid products={products} />
