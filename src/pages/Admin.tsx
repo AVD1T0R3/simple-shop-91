@@ -5,9 +5,10 @@ import { useStoreContext } from '@/context/StoreContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Lock, ShieldCheck, ClipboardList } from 'lucide-react';
+import { Lock, ShieldCheck, ClipboardList, Package, Plus } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { OrderHistory } from '@/components/admin/OrderHistory';
+import { ProductManagement } from '@/components/admin/ProductManagement';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 // Simple admin authentication (for demo purposes)
@@ -123,13 +124,17 @@ export default function Admin() {
 
         {/* Tabs for Products and Orders */}
         <Tabs defaultValue="orders" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-6">
+          <TabsList className="grid w-full grid-cols-3 mb-6">
             <TabsTrigger value="orders" className="flex items-center gap-2">
               <ClipboardList className="w-4 h-4" />
               Order History
             </TabsTrigger>
-            <TabsTrigger value="products" className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4" />
+            <TabsTrigger value="manage" className="flex items-center gap-2">
+              <Package className="w-4 h-4" />
+              Manage Products
+            </TabsTrigger>
+            <TabsTrigger value="add" className="flex items-center gap-2">
+              <Plus className="w-4 h-4" />
               Add Product
             </TabsTrigger>
           </TabsList>
@@ -137,8 +142,12 @@ export default function Admin() {
           <TabsContent value="orders">
             <OrderHistory orders={orders} />
           </TabsContent>
+
+          <TabsContent value="manage">
+            <ProductManagement />
+          </TabsContent>
           
-          <TabsContent value="products">
+          <TabsContent value="add">
             <AddProductForm showByDefault />
           </TabsContent>
         </Tabs>

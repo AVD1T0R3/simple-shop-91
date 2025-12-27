@@ -46,6 +46,20 @@ export function useStore() {
     setProducts(prev => [...prev, newProduct]);
   }, []);
 
+  // Remove product from catalog
+  const removeProduct = useCallback((productId: string) => {
+    setProducts(prev => prev.filter(p => p.id !== productId));
+  }, []);
+
+  // Update product details
+  const updateProduct = useCallback((productId: string, updates: Partial<Product>) => {
+    setProducts(prev =>
+      prev.map(p =>
+        p.id === productId ? { ...p, ...updates } : p
+      )
+    );
+  }, []);
+
   // Add item to cart or increase quantity
   const addToCart = useCallback((product: Product) => {
     setCart(prev => {
@@ -138,6 +152,8 @@ export function useStore() {
     cartTotal,
     cartCount,
     addProduct,
+    removeProduct,
+    updateProduct,
     addToCart,
     removeFromCart,
     updateQuantity,

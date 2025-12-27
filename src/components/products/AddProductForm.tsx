@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Plus, X, ImageIcon } from 'lucide-react';
 import { useStoreContext } from '@/context/StoreContext';
 import { toast } from 'sonner';
+import { StockStatus } from '@/types/store';
 
 interface AddProductFormProps {
   showByDefault?: boolean;
@@ -14,6 +15,7 @@ export function AddProductForm({ showByDefault = false }: AddProductFormProps) {
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
   const [description, setDescription] = useState('');
+  const [stockStatus, setStockStatus] = useState<StockStatus>('in_stock');
   const { addProduct } = useStoreContext();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -37,6 +39,7 @@ export function AddProductForm({ showByDefault = false }: AddProductFormProps) {
       price: priceNum,
       image: image.trim(),
       description: description.trim(),
+      stockStatus,
     });
 
     toast.success('Product added successfully!');
@@ -44,6 +47,7 @@ export function AddProductForm({ showByDefault = false }: AddProductFormProps) {
     setPrice('');
     setImage('');
     setDescription('');
+    setStockStatus('in_stock');
     setIsOpen(false);
   };
 
@@ -141,6 +145,24 @@ export function AddProductForm({ showByDefault = false }: AddProductFormProps) {
                 rows={3}
                 maxLength={500}
               />
+            </div>
+
+            {/* Stock Status */}
+            <div className="md:col-span-2">
+              <label htmlFor="stockStatus" className="block text-sm font-medium text-foreground mb-1">
+                Stock Status
+              </label>
+              <select
+                id="stockStatus"
+                value={stockStatus}
+                onChange={(e) => setStockStatus(e.target.value as StockStatus)}
+                className="w-full px-4 py-2 rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              >
+                <option value="in_stock">In Stock</option>
+                <option value="few_units">Few Units Left</option>
+                <option value="pending_restock">Pending Restock</option>
+                <option value="unavailable">No Longer Available</option>
+              </select>
             </div>
           </div>
 
