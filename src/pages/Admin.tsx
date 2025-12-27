@@ -5,8 +5,10 @@ import { useStoreContext } from '@/context/StoreContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Lock, ShieldCheck } from 'lucide-react';
+import { Lock, ShieldCheck, ClipboardList } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { OrderHistory } from '@/components/admin/OrderHistory';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 // Simple admin authentication (for demo purposes)
 const ADMIN_PASSWORD = 'admin123';
@@ -14,7 +16,7 @@ const ADMIN_PASSWORD = 'admin123';
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
-  const { products } = useStoreContext();
+  const { products, orders } = useStoreContext();
   const { toast } = useToast();
 
   const handleLogin = (e: React.FormEvent) => {
@@ -23,7 +25,7 @@ export default function Admin() {
       setIsAuthenticated(true);
       toast({
         title: 'Welcome Admin!',
-        description: 'You now have access to product management.',
+        description: 'You now have access to the dashboard.',
       });
     } else {
       toast({
@@ -45,7 +47,7 @@ export default function Admin() {
               </div>
               <h1 className="text-2xl font-bold text-foreground mb-2">Admin Access</h1>
               <p className="text-muted-foreground">
-                Enter the admin password to manage products
+                Enter the admin password to access the dashboard
               </p>
             </div>
 
@@ -90,31 +92,56 @@ export default function Admin() {
               Admin Dashboard
             </h1>
             <p className="text-muted-foreground">
-              Manage your store products
+              Manage products and view orders
             </p>
           </div>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-8">
           <div className="bg-card border border-border rounded-xl p-6">
             <p className="text-muted-foreground text-sm">Total Products</p>
             <p className="text-3xl font-bold text-foreground">{products.length}</p>
           </div>
           <div className="bg-card border border-border rounded-xl p-6">
-            <p className="text-muted-foreground text-sm">Categories</p>
-            <p className="text-3xl font-bold text-foreground">
-              {new Set(products.map(p => p.name.split(' ')[0])).size}
+            <p className="text-muted-foreground text-sm">Total Orders</p>
+            <p className="text-3xl font-bold text-foreground">{orders.length}</p>
+          </div>
+          <div className="bg-card border border-border rounded-xl p-6">
+            <p className="text-muted-foreground text-sm">Confirmed</p>
+            <p className="text-3xl font-bold text-success">
+              {orders.filter(o => o.status === 'confirmed').length}
             </p>
           </div>
           <div className="bg-card border border-border rounded-xl p-6">
-            <p className="text-muted-foreground text-sm">Status</p>
-            <p className="text-lg font-bold text-success">Active</p>
+            <p className="text-muted-foreground text-sm">Pending</p>
+            <p className="text-3xl font-bold text-warning">
+              {orders.filter(o => o.status === 'pending').length}
+            </p>
           </div>
         </div>
 
-        {/* Add Product Form */}
-        <AddProductForm showByDefault />
+        {/* Tabs for Products and Orders */}
+        <Tabs defaultValue="orders" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 mb-6">
+            <TabsTrigger value="orders" className="flex items-center gap-2">
+              <ClipboardList className="w-4 h-4" />
+              Order History
+            </TabsTrigger>
+            <TabsTrigger value="products" className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4" />
+              Add Product
+            </TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="orders">
+            <OrderHistory orders={orders} />
+          </TabsContent>
+          
+          <TabsContent value="products">
+            <AddProductForm showByDefault />
+          </TabsContent>
+        </Tabs>
       </div>
     </Layout>
   );
