@@ -1,3 +1,6 @@
+// Stock status types
+export type StockStatus = 'in_stock' | 'few_units' | 'pending_restock' | 'unavailable';
+
 // Product type definition
 export interface Product {
   id: string;
@@ -5,6 +8,7 @@ export interface Product {
   price: number;
   image: string;
   description: string;
+  stockStatus: StockStatus;
 }
 
 // Cart item extends Product with quantity
